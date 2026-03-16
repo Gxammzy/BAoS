@@ -1,0 +1,1653 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SWs Template</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+/* === GLOBAL === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family:sans-serif;
+  background: #fceabb;
+  /* Fix input overflow */
+* {
+  box-sizing: border-box;
+}
+
+}
+
+#usersSection h2 {
+    font-size: 42px;          /* bigger than normal headings */
+    color: #fd79a8;           /* bright theme color */
+    text-align: center;        /* center it */
+    font-weight: bold;         /* make it stand out */
+    margin-bottom: 20px;       /* spacing below */
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3); /* optional subtle shadow for pop */
+}
+
+
+/* Center sections (Mobile style) */
+section {
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+  display: none;
+}
+
+/* Expense Row Layout */
+.expense-item {
+  background: #dfe6e9;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+/* Right side container */
+.expense-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Amount */
+.expense-amount {
+  font-weight: bold;
+  color: #121212;
+}
+
+/* Delete button */
+.expense-delete {
+  background: transparent;
+  border: none;
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.expense-delete:hover {
+  transform: scale(1.2);
+}
+
+
+/* === CARD === */
+.card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* === HEADINGS === */
+h2, h3, h4 {
+  text-align: center;
+  color: #ff6f61;
+}
+
+/* === INPUTS === */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0;
+  border-radius: 10px;
+  border: 1px solid #b2bec3;
+  font-size: 15px;
+}
+
+/* === BUTTONS === */
+button {
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+/* Main buttons */
+.primary-btn {
+  width: 100%;
+  background: #fd79a8;
+  color: white;
+  padding: 12px;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.primary-btn:hover {
+  background: #e84393;
+  transform: scale(1.03);
+}
+
+
+/* Back button */
+.back-btn {
+  background: #fd79a8;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.back-btn:hover {
+  background: #e84393;
+}
+
+/* === LINKS === */
+.link {
+  color: #0984e3;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* === PROFILE CARD === */
+#profileCard {
+  background: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.profile-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  background: #fd79a8;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+#userName {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#userEmail {
+  font-size: 12px;
+  color: gray;
+}
+
+/* === TOP INFO BOX === */
+.top-box {
+  background: #ffeaa7;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* === CATEGORY LIST === */
+#categoryList div {
+  background: #ffeaa7;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Category button */
+#categoryList button:first-child {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #2d3436;
+}
+
+/* Delete button */
+#categoryList button:last-child {
+  border-radius: 50%;
+  padding: 5px 8px;
+}
+
+/* === BALANCE === */
+#categoryBalance {
+  font-size: 32px;
+  text-align: center;
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 15px;
+}
+
+/* === EXPENSE ITEMS === */
+#basicExpenseList div,
+#otherExpenseList div {
+  background: #dfe6e9;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* === TOTALS === */
+#totalBasic,
+#totalOther,
+#remainingBalance {
+  font-weight: bold;
+  color: #d63031;
+}
+
+/* Currency select */
+select {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: none;
+  background: #fd79a8;
+  color: white;
+  font-weight: bold;
+}
+
+#showAddCategoryBtn{
+
+      position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #fd79a8;
+    border-radius: 50%;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+#addCategoryDiv{
+
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+#addCategoryDiv .modal-content {
+    background: #ffeaa7;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.top-bar {
+    background: #ffeaa7;
+    padding: 20px 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Name hover container */
+.name-hover {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Hidden email box */
+.email-tooltip {
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: #2d3436;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+/* Show on hover */
+.name-hover:hover .email-tooltip {
+  display: block;
+}
+
+/* Inline expense add form */
+.expense-form {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.expense-form input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.expense-form button {
+  background: #fd79a8;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.app-name {
+  text-align: center;
+  font-size: 50px;  /* bigger than headings */
+  font-weight: bold;
+  color: #fd79a8;   /* matches theme */
+  margin-bottom: 0px;
+}
+
+.app-header {
+  text-align: center;       /* centers everything inside */
+  margin-bottom: 20px;
+}
+
+.app-logo {
+  font-size: 32px;          /* big logo-style */
+  font-weight: bold;
+  color: #fd79a8;
+  margin: 0 auto;           /* centers logo */
+}
+
+.app-fullname {
+  font-size: 16px;          /* full name */
+  font-weight: 500;
+  color: #2d3436;
+  margin: 4px 0 0 0;
+  text-align: center;       /* ensure sentence is centered */
+}
+
+/* Selected category title in expense section */
+#selectedCategoryTitle {
+    font-size: 28px;   /* bigger than normal headings */
+    font-weight: bold;
+    color: #fd79a8;
+    margin-bottom: 15px;
+}
+
+/* Expense section headings: Basic / Other */
+#expenseSection h4 {
+    font-size: 22px;   /* a bit smaller than category title */
+    color: #2d3436;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+/* Expense item name */
+.expense-name {
+    font-size: 18px;   /* larger than headings */
+    font-weight: bold;
+    color: #2d3436;
+}
+
+#subscriptionModal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.604);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+#subscriptionModal .modal-content {
+    background: #fd79a8;
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+#subscriptionModal ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#subscriptionModal ul li::before {
+    content: "✔️";
+    margin-right: 8px;
+}
+
+#subscriptionModal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+#subscriptionModal .modal-content {
+    background: #fd79a8;
+    color: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+#subscribeNowBtn{
+    width: 100%;
+    background: #ea5f90;
+    color: white;
+    padding: 12px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+#subscribeNowBtn:hover {
+  background: #e84393;
+  transform: scale(1.03);
+}
+.expense-toggle{
+cursor:pointer;
+user-select:none;
+}
+/* Enhanced Basic & Other sections - eye-friendly */
+.expense-section-card {
+  border: 2px solid #fd79a8; /* softer pink border */
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* softer shadow */
+  background: linear-gradient(145deg, #fff8e7, #ffffff); /* subtle warm gradient */
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+/* Slight hover effect */
+.expense-section-card:hover {
+  transform: scale(1.01); /* very gentle pop */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12); /* softer hover shadow */
+}
+
+/* Section title */
+.expense-section-card h4 {
+  margin-top: 0;
+  color: #2d3436;
+  font-size: 24px; /* slightly bigger than total for hierarchy */
+  font-weight: 600;
+}
+
+/* Total display */
+.expense-section-card .total-display {
+  font-size: 18px; /* slightly smaller than section title */
+  font-weight: 500;
+  color: #d63031; /* keeps attention without being aggressive */
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Optional: make totals stand out gently */
+.expense-section-card .total-display span {
+  font-size: 22px; /* slightly larger than text for emphasis */
+  font-weight: bold;
+  color: #e17055; /* soft red/orange to highlight */
+}
+</style>
+
+  </style>
+  <!--
+    =====================================================
+    WC Chat - Base Authentication Template
+    -----------------------------------------------------
+    Features:
+    - Firebase Authentication (Email/Password)
+    - Firebase Realtime Database
+    - Persistent Login
+    - Clean Section Switching
+    - Production-ready Structure
+    =====================================================
+  -->
+</head>
+
+<body>
+
+<!-- ===================================================== -->
+<!-- AUTH SECTION (LOGIN + REGISTER) -->
+<!-- ===================================================== -->
+<section id="authSection">
+
+  <div class="card">
+    <!-- Logo / App Name -->
+    <h1 class="app-name">BAoS</h1>
+     <p class="app-fullname">Be Aware of Spendings</p>
+    <!-- ================= LOGIN ================= -->
+    <div id="loginSection">
+
+      <h2>Login</h2>
+      
+      <form id="loginForm" autocomplete="off">
+        <input type="email" id="login_email" placeholder="Email Address" required />
+
+        <input type="password" id="login_password" placeholder="Password" required />
+
+        <button type="submit" class="primary-btn">Login</button>
+      </form>
+
+      <p>
+        Don't have an account?
+        <span id="registerLink" class="link">Register</span>
+      </p>
+
+    </div>
+
+
+    <!-- ================= REGISTER ================= -->
+    <div id="registerSection" style="display:none;">
+
+      <h2>Create Account</h2>
+      <form id="registerForm" autocomplete="off">
+        <input type="text" id="reg_name" placeholder="Full Name" required />
+
+        <input type="email" id="reg_email" placeholder="Email Address" required />
+
+        <input type="password" id="reg_password" placeholder="Password (Min 6 chars)" required />
+
+        <button type="submit" class="primary-btn">Register</button>
+      </form>
+
+      <p>
+        Already have an account?
+        <span id="loginLink" class="link">Login</span>
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= SUBSCRIPTION POPUP ================= -->
+<div id="subscriptionModal" style="display:none;">
+  <div class="modal-content">
+    <!-- Top headline -->
+    <h2 style="font-size:38px; margin-bottom:20px; color: #01ff16;">Subscribe Now</h2>
+
+    <!-- Big price -->
+    <div style="font-size:69px; font-weight:bold; margin-bottom:20px;">Ksh 300</div>
+
+    <!-- Persuasive text -->
+    <p style="font-size:16px; line-height:1.5; margin-bottom:30px;">
+      Gain full access to BAoS and take control of your spending.  
+      Track expenses, view charts, and manage your money effortlessly.  
+      Only $29 every 2 months.
+    </p>
+
+    <!-- Call-to-action -->
+    <button id="subscribeNowBtn" style="font-size:20px; padding:12px 20px;">
+      🔓 Unlock BAoS
+    </button>
+  </div>
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- USER DASHBOARD SECTION -->
+<!-- ===================================================== -->
+<section id="usersSection" style="display:none;">
+
+  <div>
+
+    <h2>BAos Dashboard</h2>
+    <!-- Profile Card -->
+<div id="profileCard">
+    <div class="profile-left">
+        <div class="avatar">👤</div>
+<div class="name-hover">
+  <span id="userName"></span>
+
+  <div class="email-tooltip" id="userEmail"></div>
+</div>
+
+    </div>
+
+    <a href="#" class="danger" id="logoutButton">Logout</a>
+
+</div>
+  
+    <!-- ADD CATEGORY BUTTON -->
+    <button id="showAddCategoryBtn">
+      ➕ Add Category
+    </button>
+
+
+
+<!-- Popup Modal -->
+<div id="addCategoryDiv" style="display:none;">
+    <div class="modal-content">
+        <h2>Create New Category</h2>
+         <input type="text" id="categoryInput" placeholder="Category Name" />
+        <br>
+         <input type="number" id="categoryStartBalance" placeholder="Starting Amount" min="0" />
+        <br>
+       <button id="saveCategoryBtn" class="primary-btn">💾 Save & Open</button>
+    </div>
+</div>
+
+    <hr />
+
+    <!-- CATEGORY LIST -->
+    <h3>Your Categories</h3>
+    <div id="categoryList"></div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- EXPENSE SECTION -->
+<!-- ===================================================== -->
+<section id="expenseSection" style="display:none;">
+
+  <div class="card">
+
+
+    <div class="top-bar">
+      <button onclick="goBackToDashboard()" class="back-btn">← Back</button>
+      <div style="text-align:center;">
+      <select id="currencySelect" class="back-btn">
+      <option value="Ksh">Ksh</option>
+      <option value="$">$</option>
+      <option value="€">€</option>
+      <option value="£">£</option>
+      </select>
+    </div>
+    
+    </div>
+<!-- See Chart Link -->
+<a href="#" id="seeChartLink" class="link" style="display:block; margin: 10px 0; text-align:end;">
+  📊 See Chart
+</a>
+
+
+<!-- Chart container (hidden by default) -->
+<div id="chartContainer" style="display:none; text-align:center; margin-top:20px;">
+  <canvas id="expenseChart" width="300" height="300"></canvas>
+</div>
+
+
+    <h3 id="selectedCategoryTitle"></h3>
+
+    <!-- BALANCE -->
+    <div id="categoryBalance"></div>
+
+    <hr />
+
+<!-- TOTAL EXPENSES -->
+<div id="totalExpenses" style="color:red; margin-bottom:15px;"></div>
+    <!-- BASIC -->
+<!-- BASIC -->
+<div class="expense-section-card" id="basicContentWrapper">
+  <h4 id="basicHeader" class="expense-toggle">Basic Expenses ▶</h4>
+  <div class="total-display">Total Basic: <span id="totalBasic">0</span></div>
+  <div id="basicContent" style="display:none;">
+    <div id="basicExpenseList"></div>
+    <button id="showBasicForm" class="primary-btn">➕ Add Basic</button>
+    <div id="basicForm" class="expense-form" style="display:none;">
+      <input type="text" id="basicName" placeholder="Name" />
+      <input type="number" id="basicAmount" placeholder="Amount" />
+      <button id="addBasicBtn">Save💾</button>
+    </div>
+  </div>
+</div>
+
+
+    <div id="basicExpenseList"></div>
+
+    <hr />
+
+    <!-- OTHER -->
+<!-- OTHER -->
+<div class="expense-section-card" id="otherContentWrapper">
+  <h4 id="otherHeader" class="expense-toggle">Other Expenses ▶</h4>
+  <div class="total-display">Total Other: <span id="totalOther">0</span></div>
+  <div id="otherContent" style="display:none;">
+    <div id="otherExpenseList"></div>
+    <button id="showOtherForm" class="primary-btn">➕ Add Other</button>
+    <div id="otherForm" class="expense-form" style="display:none;">
+      <input type="text" id="otherName" placeholder="Name" />
+      <input type="number" id="otherAmount" placeholder="Amount" />
+      <button id="addOtherBtn">Save💾</button>
+    </div>
+  </div>
+</div>
+
+
+
+    <div id="otherExpenseList"></div>
+    <!-- BALANCE ABOVE BASIC & OTHER -->
+     
+     <hr />
+      <div id="remainingBalance" style="font-weight:bold; font-size:16px; margin-bottom:10px;"></div>
+     </div>
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- FIREBASE SDKs -->
+<!-- ===================================================== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<script>
+/* ==========================================================
+   FIREBASE CONFIGURATION
+   IMPORTANT:
+   - Restrict API keys in Firebase Console
+   - Set proper Realtime Database Rules
+   - Never expose admin credentials on frontend
+========================================================== */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD8Xz_58rRSh0NHDdC1hft2R9Ka9A9vKrM",
+  authDomain: "xchat-290e0.firebaseapp.com",
+  databaseURL: "https://xchat-290e0-default-rtdb.firebaseio.com",
+  projectId: "xchat-290e0",
+  storageBucket: "xchat-290e0.appspot.com",
+  messagingSenderId: "32666669707",
+  appId: "1:32666669707:web:1a13744e3705fbbe3d3a8e"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Services
+const auth = firebase.auth();
+const database = firebase.database();
+
+/* ==========================================================
+   DOM REFERENCES
+========================================================== */
+const loginSection = document.getElementById("loginSection");
+const registerSection = document.getElementById("registerSection");
+const usersSection = document.getElementById("usersSection");
+
+/* ==========================================================
+   UI SECTION HANDLER
+========================================================== */
+/* ==========================================================
+   UI SECTION SWITCHER (GLOBAL)
+========================================================== */
+
+const authSection = document.getElementById("authSection");
+const expenseSection = document.getElementById("expenseSection");
+
+function switchSection(sectionName) {
+
+  // Hide all main sections first
+  authSection.style.display = "none";
+  usersSection.style.display = "none";
+  expenseSection.style.display = "none";
+
+  // Show requested section
+  if (sectionName === "auth") {
+    authSection.style.display = "block";
+
+    // Default to login view
+    loginSection.style.display = "block";
+    registerSection.style.display = "none";
+  }
+
+  if (sectionName === "dashboard") {
+    usersSection.style.display = "block";
+  }
+
+  if (sectionName === "expense") {
+    expenseSection.style.display = "block";
+  }
+}
+
+
+/* ==========================================================
+   NAVIGATION EVENTS
+========================================================== */
+/* ==========================================================
+   AUTH TOGGLE
+========================================================== */
+
+document.getElementById("registerLink").addEventListener("click", () => {
+  loginSection.style.display = "none";
+  registerSection.style.display = "block";
+});
+
+document.getElementById("loginLink").addEventListener("click", () => {
+  registerSection.style.display = "none";
+  loginSection.style.display = "block";
+});
+
+
+/* ==========================================================
+   AUTH PERSISTENCE
+   Keeps user logged in after refresh
+========================================================== */
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+/* ==========================================================
+   AUTH STATE OBSERVER
+   Automatically runs when:
+   - User logs in
+   - User logs out
+   - Page refresh
+========================================================== */
+auth.onAuthStateChanged(async (user) => {
+
+  if (user) {
+
+    try {
+
+      localStorage.setItem("uid", user.uid);
+
+      await loadUser(user.uid);
+
+      switchSection("dashboard");
+
+    } catch (error) {
+      console.error("User load failed:", error);
+      alert("Failed to load user data.");
+    }
+
+  } else {
+
+    localStorage.removeItem("uid");
+
+    switchSection("auth");
+
+  }
+
+});
+
+document.getElementById("currencySelect").addEventListener("change", (e) => {
+  currency = e.target.value;
+  if (selectedCategoryKey) loadExpenses(); // now also updates top balance
+});
+
+
+
+
+
+/* ==========================================================
+   REGISTER USER
+========================================================== */
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = reg_name.value.trim();
+  const email = reg_email.value.trim();
+  const password = reg_password.value.trim();
+
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters.");
+    return;
+  }
+
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
+
+    await database.ref("users/" + cred.user.uid).set({
+      name: name,
+      email: email,
+      createdAt: Date.now()
+    });
+
+    alert("Account created successfully.");
+  } catch (error) {
+    console.error("Registration error:", error);
+    alert(error.message);
+  }
+});
+
+/* ==========================================================
+   LOGIN USER
+========================================================== */
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = login_email.value.trim();
+  const password = login_password.value.trim();
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.error("Login error:", error);
+    alert(error.message);
+  }
+});
+
+
+/* ==========================================================
+   LOGOUT
+========================================================== */
+document.getElementById("logoutButton").addEventListener("click", async () => {
+
+  const confirmLogout = confirm("Are you sure you want to log out?");
+
+  if (!confirmLogout) return; // stop if user cancels
+
+  try {
+
+    await auth.signOut();
+
+    localStorage.clear();
+
+    currentUID = null;
+    selectedCategoryKey = null;
+
+    switchSection("auth");
+
+  } catch (error) {
+    console.error("Logout error:", error);
+    alert("Failed to log out.");
+  }
+
+});
+
+
+
+
+/* ==========================================================
+   LOAD USER DATA FROM DATABASE
+========================================================== */
+async function loadUser(uid) {
+  const snapshot = await database.ref("users/" + uid).once("value");
+
+  if (!snapshot.exists()) {
+    throw new Error("User data not found.");
+  }
+
+  const data = snapshot.val();
+
+  document.getElementById("userName").textContent = data.name || "N/A";
+  document.getElementById("userEmail").textContent = data.email || "N/A";
+}
+
+/* ==========================================================
+   BUDGET SYSTEM
+========================================================== */
+
+let currentUID = null;
+let selectedCategoryKey = null;
+let currency = "Ksh"; // default
+
+
+// When user logs in, store UID
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    currentUID = user.uid;
+    loadCategories();
+  }
+});
+
+/* ==========================================================
+   SHOW ADD CATEGORY DIV
+========================================================== */
+document.getElementById("showAddCategoryBtn").addEventListener("click", () => {
+  const div = document.getElementById("addCategoryDiv");
+  div.style.display = div.style.display === "none" ? "flex" : "none";
+});
+
+
+/* ==========================================================
+   SAVE CATEGORY
+========================================================== */
+document.getElementById("saveCategoryBtn").addEventListener("click", async () => {
+  const name = categoryInput.value.trim();
+  const startingAmount = parseFloat(categoryStartBalance.value);
+
+  if (!name) return alert("Enter category name");
+  if (isNaN(startingAmount) || startingAmount < 0) return alert("Enter valid starting amount");
+
+  const ref = database.ref("users/" + currentUID + "/history").push();
+
+  await ref.set({
+    name: name,
+    startingAmount: startingAmount,
+    createdAt: Date.now()
+  });
+
+  // Clear inputs
+  categoryInput.value = "";
+  categoryStartBalance.value = "";
+
+  // **Hide the modal after saving**
+  document.getElementById("addCategoryDiv").style.display = "none";
+
+  loadCategories();
+});
+
+
+
+/* ==========================================================
+   LOAD CATEGORIES
+========================================================== */
+async function loadCategories() {
+  const snapshot = await database
+    .ref("users/" + currentUID + "/history")
+    .once("value");
+
+  const container = document.getElementById("categoryList");
+  container.innerHTML = "";
+
+  if (!snapshot.exists()) return;
+
+ snapshot.forEach((child) => {
+  const data = child.val();
+
+  const wrapper = document.createElement("div");
+  wrapper.style.marginBottom = "8px";
+  wrapper.style.cursor = "pointer"; // show it's clickable
+
+  // Make ENTIRE div clickable
+  wrapper.onclick = () => {
+    openCategory(child.key, data.name);
+  };
+
+  const nameSpan = document.createElement("span");
+  nameSpan.textContent = data.name;
+  nameSpan.style.fontSize = "16px";
+
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "X";
+  delBtn.className = "expense-delete";
+
+  // Prevent click from opening category when deleting
+  delBtn.onclick = (e) => {
+    e.stopPropagation(); // very important
+    deleteCategory(child.key, data.name);
+  };
+
+  wrapper.appendChild(nameSpan);
+  wrapper.appendChild(delBtn);
+
+  container.appendChild(wrapper);
+});
+
+}
+
+
+/* ==========================================================
+   OPEN CATEGORY
+========================================================== */
+function openCategory(key, name) {
+    selectedCategoryKey = key;
+
+    // Switch to expense section
+    switchSection("expense");
+
+    // Immediately clear previous data
+    document.getElementById("basicExpenseList").innerHTML = "";
+    document.getElementById("otherExpenseList").innerHTML = "";
+    document.getElementById("totalBasic").textContent = currency + " 0";
+    document.getElementById("totalOther").textContent = currency + " 0";
+    document.getElementById("remainingBalance").textContent = currency + " 0";
+    document.getElementById("totalExpenses").textContent = "- " + currency + " 0";
+
+    // Display category title
+    const displayName = name.charAt(0).toUpperCase() + name.slice(1);
+   document.getElementById("selectedCategoryTitle").textContent = "💰 " + displayName + " Expenses";
+
+
+    // Load the starting balance
+    database.ref("users/" + currentUID + "/history/" + key).once("value", snapshot => {
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            let balanceDiv = document.getElementById("categoryBalance");
+            if (!balanceDiv) {
+                balanceDiv = document.createElement("div");
+                balanceDiv.id = "categoryBalance";
+                balanceDiv.style.fontWeight = "bold";
+                balanceDiv.style.marginBottom = "10px";
+                const expenseSection = document.getElementById("expenseSection");
+                expenseSection.insertBefore(balanceDiv, expenseSection.firstChild);
+            }
+
+            balanceDiv.textContent = currency + " " + Number(data.startingAmount).toLocaleString();
+
+            balanceDiv.style.cursor = "pointer";
+            balanceDiv.title = "Click to edit balance";
+            balanceDiv.onclick = () => editBalance(data.startingAmount);
+        }
+    });
+
+    // Load all expenses (async)
+    loadExpenses();
+}
+
+
+
+
+/* ==========================================================
+   SAVE EXPENSE
+========================================================== */
+// ADD BASIC
+// ADD BASIC
+document.getElementById("addBasicBtn").addEventListener("click", async () => {
+
+  const name = basicName.value.trim();
+  const amount = basicAmount.value.trim();
+
+  if (!name || !amount) return alert("Fill all fields");
+
+  // Save to Firebase (unchanged)
+  const ref = database
+    .ref("users/" + currentUID + "/history/" + selectedCategoryKey + "/expenses/basic")
+    .push();
+
+  await ref.set({
+    name,
+    amount: Number(amount),
+    createdAt: Date.now()
+  });
+
+  // Reset UI
+  basicName.value = "";
+  basicAmount.value = "";
+
+  basicForm.style.display = "none";
+  showBasicBtn.style.display = "block";
+
+  loadExpenses();
+});
+
+
+
+// ADD OTHER
+
+document.getElementById("addOtherBtn").addEventListener("click", async () => {
+
+  const name = otherName.value.trim();
+  const amount = otherAmount.value.trim();
+
+  if (!name || !amount) return alert("Fill all fields");
+
+  const ref = database
+    .ref("users/" + currentUID + "/history/" + selectedCategoryKey + "/expenses/other")
+    .push();
+
+  await ref.set({
+    name,
+    amount: Number(amount),
+    createdAt: Date.now()
+  });
+
+  otherName.value = "";
+  otherAmount.value = "";
+
+  otherForm.style.display = "none";
+  showOtherBtn.style.display = "block";
+
+  loadExpenses();
+});
+
+
+
+
+/* ==========================================================
+   LOAD EXPENSES
+========================================================== */
+async function loadExpenses() {
+  // BASIC
+  const basicSnap = await database
+    .ref("users/" + currentUID + "/history/" + selectedCategoryKey + "/expenses/basic")
+    .once("value");
+
+  // OTHER
+  const otherSnap = await database
+    .ref("users/" + currentUID + "/history/" + selectedCategoryKey + "/expenses/other")
+    .once("value");
+
+  const basicDiv = document.getElementById("basicExpenseList");
+  const otherDiv = document.getElementById("otherExpenseList");
+
+  basicDiv.innerHTML = "";
+  otherDiv.innerHTML = "";
+
+  let totalBasic = 0;
+  let totalOther = 0;
+
+  // Load BASIC
+  if (basicSnap.exists()) {
+    basicSnap.forEach((child) => {
+      const data = child.val();
+      totalBasic += data.amount;
+      showExpense(child, "basic", basicDiv);
+    });
+  }
+
+  // Load OTHER
+  if (otherSnap.exists()) {
+    otherSnap.forEach((child) => {
+      const data = child.val();
+      totalOther += data.amount;
+      showExpense(child, "other", otherDiv);
+    });
+  }
+
+  // Update totals in HTML
+document.getElementById("totalBasic").textContent = currency + " " + totalBasic.toLocaleString();
+document.getElementById("totalOther").textContent = currency + " " + totalOther.toLocaleString();
+
+
+  // Calculate remaining balance
+  const balanceSnap = await database
+    .ref("users/" + currentUID + "/history/" + selectedCategoryKey)
+    .once("value");
+
+  let startingAmount = 0;
+  if (balanceSnap.exists()) {
+    startingAmount = balanceSnap.val().startingAmount || 0;
+  }
+
+  const totalSpent = totalBasic + totalOther;
+  const remaining = startingAmount - totalSpent;
+
+  // Update Remaining Balance display
+
+  const remainingDiv = document.getElementById("remainingBalance");
+  if (remainingDiv) {
+    remainingDiv.textContent = currency + " " + remaining.toLocaleString();
+  }
+
+  // Update Total Expenses display
+  const totalExpDiv = document.getElementById("totalExpenses");
+  if (totalExpDiv) {
+    totalExpDiv.textContent = "- " + currency + " " + totalSpent.toLocaleString();
+  }
+
+  // ALSO update the top starting balance display
+  const balanceDiv = document.getElementById("categoryBalance");
+  if (balanceDiv) {
+    balanceDiv.textContent = currency + " " + startingAmount.toLocaleString();
+  }
+
+}
+
+
+
+
+
+
+async function deleteCategory(key, name) {
+  const confirmDelete = confirm(
+    "Delete category '" + name + "' and ALL expenses?"
+  );
+
+  if (!confirmDelete) return;
+
+  await database
+    .ref("users/" + currentUID + "/history/" + key)
+    .remove();
+
+
+  document.getElementById("expenseSection").style.display = "none";
+
+  loadCategories();
+}
+
+async function deleteExpense(key, type) {
+
+  const confirmDelete = confirm("Delete this expense?");
+
+  if (!confirmDelete) return;
+
+  await database
+    .ref(
+      "users/" +
+      currentUID +
+      "/history/" +
+      selectedCategoryKey +
+      "/expenses/" +
+      type +
+      "/" +
+      key
+    )
+    .remove();
+
+  loadExpenses();
+}
+
+
+function showExpense(child, type, container) {
+
+  const data = child.val();
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "expense-item";
+
+  // Name (left)
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "expense-name";
+  nameSpan.textContent = data.name;
+
+  // Right side (amount + delete)
+  const rightBox = document.createElement("div");
+  rightBox.className = "expense-right";
+
+  const amountSpan = document.createElement("span");
+  amountSpan.className = "expense-amount";
+  amountSpan.textContent = currency + " " + data.amount.toLocaleString();
+
+  const delBtn = document.createElement("button");
+  delBtn.className = "expense-delete";
+  delBtn.textContent = "✖";
+
+  delBtn.onclick = () => deleteExpense(child.key, type);
+
+  rightBox.appendChild(amountSpan);
+  rightBox.appendChild(delBtn);
+
+  wrapper.appendChild(nameSpan);
+  wrapper.appendChild(rightBox);
+
+  container.appendChild(wrapper);
+}
+
+
+async function editBalance(currentBalance) {
+    const newBalanceStr = prompt("Enter new balance:", currentBalance);
+    const newBalance = parseFloat(newBalanceStr);
+
+    if (isNaN(newBalance) || newBalance < 0) {
+        alert("Invalid balance entered!");
+        return;
+    }
+
+    // Update display
+    const balanceDiv = document.getElementById("categoryBalance");
+    balanceDiv.textContent = currency + " " + newBalance;
+
+
+    // Update in Firebase
+    if (currentUID && selectedCategoryKey) {
+        await database.ref("users/" + currentUID + "/history/" + selectedCategoryKey).update({
+            startingAmount: newBalance
+        });
+    }
+    loadExpenses();
+}
+
+function goBackToDashboard() {
+    // Clear expense lists and totals
+    document.getElementById("basicExpenseList").innerHTML = "";
+    document.getElementById("otherExpenseList").innerHTML = "";
+    document.getElementById("totalBasic").textContent = currency + " 0";
+    document.getElementById("totalOther").textContent = currency + " 0";
+    document.getElementById("remainingBalance").textContent = currency + " 0";
+    document.getElementById("totalExpenses").textContent = "- " + currency + " 0";
+    document.getElementById("selectedCategoryTitle").textContent = "";
+    document.getElementById("categoryBalance").textContent = currency + " 0";
+
+    // Close chart if open
+    const chartDiv = document.getElementById("chartContainer");
+    if (chartDiv.style.display === "block") {
+        chartDiv.style.display = "none";
+        document.getElementById("seeChartLink").textContent = "📊 See Chart";
+    }
+
+    // Collapse Basic & Other sections
+    const basicContent = document.getElementById("basicContent");
+    const otherContent = document.getElementById("otherContent");
+    const basicHeader = document.getElementById("basicHeader");
+    const otherHeader = document.getElementById("otherHeader");
+
+    basicContent.style.display = "none";
+    otherContent.style.display = "none";
+    basicHeader.textContent = "Basic Expenses ▶";
+    otherHeader.textContent = "Other Expenses ▶";
+
+    // Switch to dashboard
+    switchSection("dashboard");
+
+    // Clear the selected category key
+    selectedCategoryKey = null;
+}
+
+
+function updateBalanceDisplay() {
+
+  if (!currentUID || !selectedCategoryKey) return;
+
+  database
+    .ref("users/" + currentUID + "/history/" + selectedCategoryKey)
+    .once("value", snapshot => {
+
+      if (!snapshot.exists()) return;
+
+      const data = snapshot.val();
+      const balanceDiv = document.getElementById("categoryBalance");
+
+      if (balanceDiv) {
+        balanceDiv.textContent = currency + " " + data.startingAmount;
+      }
+
+    });
+}
+
+// Close Add Category modal when clicking outside the modal content
+const addCategoryDiv = document.getElementById("addCategoryDiv");
+
+addCategoryDiv.addEventListener("click", function(e) {
+  // If the click is directly on the overlay (not inside the modal)
+  if (!e.target.closest(".modal-content")) {
+    addCategoryDiv.style.display = "none";
+  }
+});
+
+// BASIC toggle
+const showBasicBtn = document.getElementById("showBasicForm");
+const basicForm = document.getElementById("basicForm");
+
+showBasicBtn.addEventListener("click", () => {
+  showBasicBtn.style.display = "none";
+  basicForm.style.display = "flex";
+  document.getElementById("basicName").focus();
+});
+
+// OTHER toggle
+const showOtherBtn = document.getElementById("showOtherForm");
+const otherForm = document.getElementById("otherForm");
+
+showOtherBtn.addEventListener("click", () => {
+  showOtherBtn.style.display = "none";
+  otherForm.style.display = "flex";
+  document.getElementById("otherName").focus();
+});
+
+const seeChartLink = document.getElementById("seeChartLink");
+const chartDiv = document.getElementById("chartContainer");
+
+seeChartLink.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (chartDiv.style.display === "none" || chartDiv.style.display === "") {
+    chartDiv.style.display = "block";
+    seeChartLink.textContent = "❌ Close Chart";  // Change text when open
+    renderChart();
+  } else {
+    chartDiv.style.display = "none";
+    seeChartLink.textContent = "📊 See Chart";  // Change text when closed
+  }
+});
+
+
+let expenseChartInstance = null;
+
+function renderChart() {
+  if (!selectedCategoryKey) return;
+
+  // Get expenses totals
+  const totalBasic = parseFloat(document.getElementById("totalBasic").textContent.replace(/[^\d.-]/g, '')) || 0;
+  const totalOther = parseFloat(document.getElementById("totalOther").textContent.replace(/[^\d.-]/g, '')) || 0;
+
+  const ctx = document.getElementById("expenseChart").getContext("2d");
+
+  // Destroy previous chart if exists
+  if (expenseChartInstance) {
+    expenseChartInstance.destroy();
+  }
+
+  expenseChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Basic Expenses', 'Other Expenses'],
+      datasets: [{
+        label: 'Expenses',
+        data: [totalBasic, totalOther],
+        backgroundColor: ['#fd79a8', '#ffeaa7'],
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + currency + ' ' + context.raw.toLocaleString();
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+
+
+
+const subscriptionModal = document.getElementById("subscriptionModal");
+const subscribeNowBtn = document.getElementById("subscribeNowBtn");
+
+async function checkSubscription(uid) {
+  const snapshot = await database.ref("users/" + uid + "/subscription").once("value");
+  const data = snapshot.val();
+  return data?.status === "active";
+}
+
+// Show subscription modal if user is not subscribed
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    currentUID = user.uid;
+    const isSubscribed = await checkSubscription(currentUID);
+
+    if (!isSubscribed) {
+      subscriptionModal.style.display = "flex"; // show modal
+    } else {
+      loadCategories();
+      switchSection("dashboard");
+    }
+  } else {
+    switchSection("auth");
+  }
+});
+
+// Prevent closing modal by clicking outside
+subscriptionModal.addEventListener("click", (e) => {
+  if (!e.target.closest(".modal-content")) {
+    subscriptionModal.style.display = "flex"; // keep modal visible
+  }
+});
+
+// **TEMP: Subscribe button just opens dashboard**
+subscribeNowBtn.addEventListener("click", async () => {
+  // Hide modal
+  subscriptionModal.style.display = "none";
+
+  // For now, allow access immediately
+  await loadCategories();
+  switchSection("dashboard");
+
+  // OPTIONAL: mark user as "subscribed" in Firebase if you want to simulate
+  // await database.ref("users/" + currentUID + "/subscription").set({ status: "active", plan: "2-month", startDate: Date.now() });
+});
+
+// BASIC
+basicHeader.addEventListener("click", () => {
+
+  if (basicContent.style.display === "none") {
+    basicContent.style.display = "block";
+    basicHeader.textContent = "Basic Expenses ▼";
+  } else {
+    basicContent.style.display = "none";
+    basicHeader.textContent = "Basic Expenses ▶";
+  }
+
+});
+
+// OTHER
+otherHeader.addEventListener("click", () => {
+
+  if (otherContent.style.display === "none") {
+    otherContent.style.display = "block";
+    otherHeader.textContent = "Other Expenses ▼";
+  } else {
+    otherContent.style.display = "none";
+    otherHeader.textContent = "Other Expenses ▶";
+  }
+
+});
+
+</script>
+
+</body>
+</html>
